@@ -66,7 +66,7 @@ const navGroups: NavGroup[] = [
       },
       {
         title: "Tables",
-        url: "/Tables",
+        url: "/table",
         icon: IconBuildingStore,
       },
     ],

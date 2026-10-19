@@ -28,6 +28,7 @@ model User {
   avatar               String?  @default("/user.png")
   must_change_password Boolean  @default(true) @map("must_change_password")
   role                 Role     @relation(fields: [role_id], references: [id])
+  orders               Order[]
 
   @@map("users")
 }
@@ -60,6 +61,7 @@ model MenuItem {
   createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt       DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
   category        MenuCategory @relation(fields: [categoryId], references: [id], onUpdate: NoAction)
+  orderItems      OrderItem[]
 
   @@index([categoryId], map: "idx_menu_items_category_id")
   @@index([isActive, isAvailable], map: "idx_menu_items_is_active_is_available")
@@ -71,6 +73,72 @@ model RestaurantTable {
   tableNo     String  @unique @map("table_no")
   capacity    Int
   isAvailable Boolean @default(true) @map("is_available")
+  orders      Order[]
 
   @@map("resturant_table")
+}
+
+enum OrderType {
+  DINE_IN
+  TAKEAWAY
+  DELIVERY
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+  REFUNDED
+}
+
+model Order {
+  id             Int           @id @default(autoincrement())
+  orderNumber    String        @unique @map("order_number")
+  orderType      OrderType     @map("order_type")
+  tableId        Int?          @map("table_id")
+  createdBy      Int           @map("created_by")
+  orderStatus    OrderStatus   @default(PENDING) @map("order_status")
+  paymentStatus  PaymentStatus @default(UNPAID) @map("payment_status")
+  subtotal       Decimal       @default(0) @db.Decimal(10, 2)
+  discountAmount Decimal       @default(0) @map("discount_amount") @db.Decimal(10, 2)
+  taxAmount      Decimal       @default(0) @map("tax_amount") @db.Decimal(10, 2)
+  totalAmount    Decimal       @default(0) @map("total_amount") @db.Decimal(10, 2)
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  table   RestaurantTable? @relation(fields: [tableId], references: [id])
+  creator User             @relation(fields: [createdBy], references: [id])
+  items   OrderItem[]
+
+  @@index([tableId])
+  @@index([createdBy])
+  @@index([orderStatus])
+  @@map("orders")
+}
+
+model OrderItem {
+  id               Int     @id @default(autoincrement())
+  orderId          Int     @map("order_id")
+  menuItemId       Int     @map("menu_item_id")
+  itemNameSnapshot String  @map("item_name_snapshot")
+  unitPrice        Decimal @map("unit_price") @db.Decimal(10, 2)
+  quantity         Int
+  lineTotal        Decimal @map("line_total") @db.Decimal(10, 2)
+  notes            String?
+
+  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@index([orderId])
+  @@index([menuItemId])
+  @@map("order_items")
 }
