@@ -11,6 +11,7 @@ export const appRoutes: Record<string, AppRoute> = {
   "admin/users": { title: "User Management", description: "Manage users and roles.", path: "admin/users" },
   users: { title: "User Management", description: "Manage users and roles.", path: "users" },
   menu: { title: "Menu Management", description: "Manage restaurant menu categories and items.", path: "menu" },
+  table: { title: "Table Management", description: "Manage restaurant tables and their availability.", path: "table" },
   "admin/categories": { title: "Category Management", description: "Manage ticket categories.", path: "admin/categories" },
   notifications: { title: "Notifications", description: "Stay up to date with ticket activity.", path: "notifications" },
 }

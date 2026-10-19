@@ -16,13 +16,7 @@ export interface MenuCategoryDrawerProps {
   isLoading?: boolean;
 }
 
-export function MenuCategoryDrawer({
-  open,
-  onOpenChange,
-  editingCategory,
-  onSubmit,
-  isLoading = false,
-}: MenuCategoryDrawerProps) {
+export function MenuCategoryDrawer({ open, onOpenChange, editingCategory, onSubmit, isLoading = false }: MenuCategoryDrawerProps) {
   return (
     <Drawer open={open} onOpenChange={onOpenChange} swipeDirection="right">
       <DrawerContent>

@@ -189,7 +189,7 @@ export default function MenuItemForm({
       </div>
 
       <div className="flex gap-2 pt-3">
-        <Button type="button" className="w-full bg-gray-100 text-gray-800 hover:bg-gray-200" variant="outline" onClick={onCancel} disabled={isLoading}>
+        <Button type="button" className="w-full bg-gray-100 text-gray-800 hover:bg-gray-200" onClick={onCancel} disabled={isLoading}>
           Cancel
         </Button>
         <Button type="submit" className="w-full bg-gray-800 text-white px-5 font-medium shadow-xs hover:bg-gray-700"

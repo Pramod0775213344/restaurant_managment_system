@@ -7,6 +7,7 @@ import "./App.css"
 import AppLayout from "./layout/AppLayout"
 import ProtectedRoute from "./components/auth/ProtectedRoute"
 import { useAuth } from "./context/AuthContext"
+import RestaurantTablePage from "./pages/RestaurnatTables/RestaurantTablePage"
 
 function App() {
   const { user, loading } = useAuth()
@@ -74,6 +75,7 @@ function App() {
         />
         <Route path="/users" element={<UserPage />} />
         <Route path="/menu" element={<MenuPage />} />
+        <Route path="/table" element={<RestaurantTablePage />} />
       </Route>
 
       {/* Fallback */}
