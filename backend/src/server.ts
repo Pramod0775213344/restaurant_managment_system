@@ -1,4 +1,4 @@
-// ⚠️ MUST be first — load env vars before any other imports
+// MUST be first — load env vars before any other imports
 import "dotenv/config";
 
 import express from "express";

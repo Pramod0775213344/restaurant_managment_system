@@ -44,16 +44,17 @@ export const login = async (req: Request, res: Response) => {
         role: user.roles?.name || "user",
       },
       jwtSecret,
-      { expiresIn: "7d" }
+      { expiresIn: "24h" }
     );
 
-    // Set HTTP-only secure cookie
+    // Set HTTP-only secure session cookie (no maxAge = deleted when browser closes)
     const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      // No maxAge — this makes it a session cookie.
+      // It will be automatically deleted when the browser is closed.
     });
 
     return res.status(200).json({

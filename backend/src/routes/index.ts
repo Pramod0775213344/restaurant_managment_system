@@ -5,6 +5,7 @@ import menuRoutes from "./menuRoutes";
 import categoryRoutes from "./categoryRoutes";
 import menuItemRoutes from "./menuItemRoutes";
 import tableRoutes from "./tableRoutes";
+import orderRoutes from "./orderRoutes";
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use("/menu", menuRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/menu-items", menuItemRoutes);
 router.use("/tables", tableRoutes);
+router.use("/orders", orderRoutes);
 
 export default router;
